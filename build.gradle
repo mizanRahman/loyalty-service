@@ -1,0 +1,56 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.1.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+	baseName = 'loyalty-service'
+	version = '1.0'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+    compile.exclude module: "spring-boot-starter-tomcat"
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile("org.springframework.boot:spring-boot-starter-jetty")
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	compile('org.projectlombok:lombok')
+
+	// development
+	runtime('com.h2database:h2')
+
+	// ops
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+
+	// test
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+// todo:
+//		--buildInfo
+//		--gitInfo
+//		--ttp://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#build-tool-plugins-gradle-packaging
+//		-- error code
+//		-- correlationId
+//		-- common logging filter
